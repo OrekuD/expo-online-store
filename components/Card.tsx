@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { Context } from "../context/context";
 import { width, height } from "../constants/Layout";
@@ -10,6 +10,7 @@ import { URL } from "../constants/Url";
 interface Props {
   navigation?: any;
   data: {
+    _id: string;
     name: string;
     price: number;
     productImage: string;
@@ -18,7 +19,8 @@ interface Props {
 }
 
 const Card: React.FC<Props> = ({ navigation, data }) => {
-  const { name, price, productImage, specification } = data;
+  const { getProduct, manageCart } = useContext<any>(Context);
+  const { name, price, productImage, specification, _id } = data;
   return (
     <RectButton
       style={styles.container}
@@ -33,9 +35,21 @@ const Card: React.FC<Props> = ({ navigation, data }) => {
         <RectButton style={styles.button}>
           <Ionicons name="ios-heart-empty" color="#121212" size={20} />
         </RectButton>
-        <RectButton style={styles.button}>
-          <Entypo name="plus" color="#121212" size={22} />
-        </RectButton>
+        {getProduct(data) ? (
+          <RectButton
+            onPress={() => manageCart("REMOVE", data)}
+            style={styles.button}
+          >
+            <Entypo name="minus" color="#121212" size={22} />
+          </RectButton>
+        ) : (
+          <RectButton
+            style={styles.button}
+            onPress={() => manageCart("ADD", data)}
+          >
+            <Entypo name="plus" color="#121212" size={22} />
+          </RectButton>
+        )}
       </View>
     </RectButton>
   );

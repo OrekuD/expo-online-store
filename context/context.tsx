@@ -8,8 +8,20 @@ interface Props {
   children: ReactNode;
 }
 
+interface ProductProps {
+  _id: string;
+  name: string;
+  price: number;
+  productImage: string;
+  specification?: string;
+  count?: number;
+  total?: number;
+}
+
 const AppProvider: React.FC<Props> = ({ children }) => {
-  const [products, setProducts] = useState<object[] | null>([]);
+  const [products, setProducts] = useState<ProductProps[] | null>([]);
+  const [cart, setCart] = useState<ProductProps[]>([]);
+  const [cartTotal, setCartTotal] = useState<number>(0);
   const [darkTheme, setDarkTheme] = useState<boolean>(true);
   const [colors, setColors] = useState<object>(dark);
 
@@ -31,8 +43,75 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     }
   }, [darkTheme]);
 
+  useEffect(() => {
+    calculateCartTotal();
+  }, [cart]);
+
+  const calculateCartTotal = () => {
+    let total = 0;
+    cart.forEach((item) => (total += item.total));
+    setCartTotal(total);
+  };
+
+  const manageCart = (action: string, product: ProductProps) => {
+    let tempCart: ProductProps[] = [];
+    let updatedProduct: object = {};
+    let updatedProductIndex = 0;
+    switch (action) {
+      case "ADD":
+        if (getProduct(product)) {
+          return;
+        }
+        product.count = 1;
+        product.total = product.price;
+        setCart([...cart, product]);
+        break;
+      case "REMOVE":
+        setCart(cart.filter((cartItem) => cartItem._id !== product._id));
+        break;
+      case "EMPTY":
+        setCart([]);
+        break;
+      case "INCREASE":
+        tempCart = [...cart];
+        updatedProductIndex = tempCart.findIndex(
+          (item) => item._id === product._id
+        );
+        updatedProduct = tempCart[updatedProductIndex];
+        updatedProduct.count++;
+        updatedProduct.total = updatedProduct.count * updatedProduct.price;
+        tempCart[updatedProductIndex] = updatedProduct;
+        setCart(tempCart);
+        break;
+      case "DECREASE":
+        tempCart = [...cart];
+        updatedProductIndex = tempCart.findIndex(
+          (item) => item._id === product._id
+        );
+        updatedProduct = tempCart[updatedProductIndex];
+        if (updatedProduct.count === 1) {
+          setCart(cart.filter((item) => item._id !== product._id));
+          return;
+        }
+        updatedProduct.count--;
+        updatedProduct.total = updatedProduct.count * updatedProduct.price;
+        tempCart[updatedProductIndex] = updatedProduct;
+        setCart(tempCart);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const getProduct = (product: object) =>
+    cart.find((item) => item._id === product._id);
+
   return (
-    <Context.Provider value={{ products, colors }}>{children}</Context.Provider>
+    <Context.Provider
+      value={{ products, colors, manageCart, getProduct, cart }}
+    >
+      {children}
+    </Context.Provider>
   );
 };
 

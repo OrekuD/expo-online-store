@@ -14,7 +14,7 @@ const Product: React.FC<StackScreenProps<{}>> = ({
     params: { data },
   },
 }) => {
-  const { colors } = useContext<any>(Context);
+  const { colors, manageCart, getProduct } = useContext<any>(Context);
   const { name, price, productImage, specification } = data;
   return (
     <ScrollView
@@ -34,9 +34,21 @@ const Product: React.FC<StackScreenProps<{}>> = ({
           <Text title={name} style={styles.detailsText} />
           <Text title={price} style={styles.detailsText} />
         </View>
-        <RectButton style={styles.button}>
-          <Text title="add to cart" style={styles.text} />
-        </RectButton>
+        {getProduct(data) ? (
+          <RectButton
+            onPress={() => manageCart("REMOVE", data)}
+            style={styles.button}
+          >
+            <Text title="remove from cart" style={styles.buttonText} />
+          </RectButton>
+        ) : (
+          <RectButton
+            onPress={() => manageCart("ADD", data)}
+            style={styles.button}
+          >
+            <Text title="add to cart" style={styles.buttonText} />
+          </RectButton>
+        )}
       </View>
     </ScrollView>
   );
@@ -79,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    width: 150,
+    width: 160,
     height: 50,
     backgroundColor: "#6f0000",
     alignItems: "center",
@@ -88,7 +100,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginRight: 20,
   },
-  text: {
+  buttonText: {
     textTransform: "uppercase",
     fontSize: 18,
   },
