@@ -3,6 +3,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { Context } from "../context/context";
 import { Text, Header, Card } from "../components";
 import { StackScreenProps } from "@react-navigation/stack";
+import { products } from "../data";
 // interface Props {
 //   navigation:
 // }

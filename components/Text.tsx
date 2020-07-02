@@ -3,7 +3,7 @@ import { Text as _Text, StyleSheet } from "react-native";
 import { Context } from "../context/context";
 
 interface Props {
-  title: string;
+  title: string | number;
   style?: object;
 }
 

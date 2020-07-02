@@ -17,14 +17,12 @@ interface Props {
   };
 }
 
-const Card: React.FC<Props> = ({
-  navigation,
-  data: { name, price, productImage, specification },
-}) => {
+const Card: React.FC<Props> = ({ navigation, data }) => {
+  const { name, price, productImage, specification } = data;
   return (
     <RectButton
       style={styles.container}
-      onPress={() => navigation.navigate("Product")}
+      onPress={() => navigation.navigate("Product", { data })}
     >
       <Image
         source={{ uri: `${URL}/${productImage}` }}
