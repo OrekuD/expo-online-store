@@ -14,15 +14,19 @@ interface ProductProps {
   price: number;
   productImage: string;
   specification?: string;
+}
+
+interface CartProps extends ProductProps {
   count: number;
   total: number;
 }
 
 const AppProvider: React.FC<Props> = ({ children }) => {
-  const [products, setProducts] = useState<ProductProps[] | null>([]);
-  const [cart, setCart] = useState<ProductProps[]>([]);
+  const [products, setProducts] = useState<ProductProps[]>([]);
+  const [cart, setCart] = useState<CartProps[]>([]);
   const [cartTotal, setCartTotal] = useState<number>(0);
   const [darkTheme, setDarkTheme] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [colors, setColors] = useState<object>(dark);
 
   useEffect(() => {
@@ -53,9 +57,9 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     setCartTotal(total);
   };
 
-  const manageCart = (action: string, product: ProductProps) => {
-    let tempCart: ProductProps[] = [];
-    let updatedProduct: ProductProps = {};
+  const manageCart = (action: string, product: CartProps) => {
+    let tempCart: CartProps[] = [];
+    let updatedProduct: CartProps = {};
     let updatedProductIndex = 0;
     switch (action) {
       case "ADD":
@@ -116,6 +120,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
         cart,
         cartTotal,
         darkTheme,
+        isLoggedIn,
       }}
     >
       {children}

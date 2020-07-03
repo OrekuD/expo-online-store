@@ -1,9 +1,15 @@
 import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, Cart, ProductScreen, ProfileScreen } from "../screens";
+import {
+  HomeScreen,
+  Cart,
+  ProductScreen,
+  ProfileScreen,
+  SignIn,
+  SignUp,
+} from "../screens";
 import {
   Ionicons,
   MaterialCommunityIcons,
@@ -12,27 +18,41 @@ import {
 import { Context } from "../context/context";
 
 const HomeNavigator = createStackNavigator();
-const MainNavigator = createDrawerNavigator();
+const AccountNavigator = createStackNavigator();
 const TabNavigator = createBottomTabNavigator();
 
-// const MainNavigatorScreen: React.FC = () => {
-//   return (
-//     <MainNavigator.Navigator>
-//       <MainNavigator.Screen name="Home" component={HomeNavigatorScreen} />
-//       <MainNavigator.Screen name="Cart" component={Cart} />
-//       <MainNavigator.Screen name="Profile" component={ProfileScreen} />
-//     </MainNavigator.Navigator>
-//   );
-// };
+const AccountNavigatorScreen: React.FC = () => {
+  const { colors, darkTheme } = useContext<any>(Context);
+  return (
+    <AccountNavigator.Navigator
+      screenOptions={{
+        cardStyle: { backgroundColor: colors.background },
+        headerStyle: { backgroundColor: darkTheme ? "#121212" : "#ffffff" },
+        headerTintColor: colors.text,
+      }}
+    >
+      <AccountNavigator.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{ title: "Sign In" }}
+      />
+      <AccountNavigator.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ title: "Sign Up" }}
+      />
+    </AccountNavigator.Navigator>
+  );
+};
 
 const TabNavigatorScreen: React.FC = () => {
-  const { darkTheme, colors } = useContext(Context);
+  const { darkTheme, colors } = useContext<any>(Context);
   return (
     <TabNavigator.Navigator
       tabBarOptions={{
         showLabel: false,
-        style: { height: 70 },
-        tabStyle: { backgroundColor: colors.background },
+        style: { height: 65 },
+        tabStyle: { backgroundColor: darkTheme ? "#121212" : "#ffffff" },
       }}
     >
       <TabNavigator.Screen
@@ -88,9 +108,10 @@ const HomeNavigatorScreen: React.FC = () => {
 };
 
 const RootNavigator: React.FC = () => {
+  const { isLoggedIn } = useContext<any>(Context);
   return (
     <NavigationContainer>
-      <TabNavigatorScreen />
+      {isLoggedIn ? <TabNavigatorScreen /> : <AccountNavigatorScreen />}
     </NavigationContainer>
   );
 };

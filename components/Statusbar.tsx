@@ -9,7 +9,7 @@ const StatusBar: React.FC = () => {
     <_StatusBar
       translucent
       barStyle={darkTheme ? "light-content" : "dark-content"}
-      backgroundColor={colors.background}
+      backgroundColor={darkTheme ? "#121212" : "#ffffff"}
     />
   );
 };

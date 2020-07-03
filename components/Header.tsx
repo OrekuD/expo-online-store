@@ -11,9 +11,14 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ title, navigation }) => {
-  const { cart, colors } = useContext<any>(Context);
+  const { cart, colors, darkTheme } = useContext<any>(Context);
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: darkTheme ? "#121212" : "#ffffff",
+      }}
+    >
       <Text style={{ ...styles.title, color: colors.text }}>Shopapp</Text>
       <View style={styles.cartContainer}>
         <Ionicons
