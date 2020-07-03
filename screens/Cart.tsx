@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../context/context";
 import Text from "../components/Text";
-import { StackScreenProps } from "@react-navigation/stack";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { StyleSheet, View, FlatList } from "react-native";
 import { Header, CartItem } from "../components";
 import { width } from "../constants/Layout";
 import { RectButton } from "react-native-gesture-handler";
 
-const Cart: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
+const Cart: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
   const { cart, colors, cartTotal } = useContext<any>(Context);
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>

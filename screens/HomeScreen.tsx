@@ -2,13 +2,13 @@ import * as React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { Context } from "../context/context";
 import { Text, Header, Card } from "../components";
-import { StackScreenProps } from "@react-navigation/stack";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { products } from "../data";
 // interface Props {
 //   navigation:
 // }
 
-const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
+const HomeScreen: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
   const { colors, products } = React.useContext<any>(Context);
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
@@ -18,7 +18,7 @@ const HomeScreen: React.FC<StackScreenProps<{}>> = ({ navigation }) => {
           flex: 1,
           borderRadius: 10,
           overflow: "hidden",
-          marginVertical: 10,
+          marginVertical: 5,
         }}
       >
         <FlatList
