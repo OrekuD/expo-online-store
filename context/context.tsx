@@ -14,8 +14,8 @@ interface ProductProps {
   price: number;
   productImage: string;
   specification?: string;
-  count?: number;
-  total?: number;
+  count: number;
+  total: number;
 }
 
 const AppProvider: React.FC<Props> = ({ children }) => {
@@ -55,7 +55,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
 
   const manageCart = (action: string, product: ProductProps) => {
     let tempCart: ProductProps[] = [];
-    let updatedProduct: object = {};
+    let updatedProduct: ProductProps = {};
     let updatedProductIndex = 0;
     switch (action) {
       case "ADD":
@@ -108,7 +108,15 @@ const AppProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <Context.Provider
-      value={{ products, colors, manageCart, getProduct, cart }}
+      value={{
+        products,
+        colors,
+        manageCart,
+        getProduct,
+        cart,
+        cartTotal,
+        darkTheme,
+      }}
     >
       {children}
     </Context.Provider>

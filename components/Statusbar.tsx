@@ -8,7 +8,7 @@ const StatusBar: React.FC = () => {
   return (
     <_StatusBar
       translucent
-      barStyle={darkTheme ? "dark-content" : "light-content"}
+      barStyle={darkTheme ? "light-content" : "dark-content"}
       backgroundColor={colors.background}
     />
   );

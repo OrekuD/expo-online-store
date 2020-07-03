@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    width: 160,
+    width: 180,
     height: 50,
     backgroundColor: "#6f0000",
     alignItems: "center",
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textTransform: "uppercase",
     fontSize: 18,
+    color: "#ffffff",
   },
 });
 

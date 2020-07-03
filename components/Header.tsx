@@ -6,26 +6,26 @@ import { BorderlessButton } from "react-native-gesture-handler";
 import { Context } from "../context/context";
 
 interface Props {
-  title: string;
-  navigation: any;
+  title?: string;
+  navigation?: any;
 }
 
-const color = "#ffffff";
-
 const Header: React.FC<Props> = ({ title, navigation }) => {
-  const { cart } = useContext<any>(Context);
+  const { cart, colors } = useContext<any>(Context);
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.title }}>Shopapp</Text>
+      <Text style={{ ...styles.title, color: colors.text }}>Shopapp</Text>
       <View style={styles.cartContainer}>
         <Ionicons
           name="md-cart"
-          color={color}
+          color={colors.text}
           size={18}
           style={{ marginRight: 3 }}
         />
         <BorderlessButton onPress={() => navigation.navigate("Cart")}>
-          <Text style={{ ...styles.cartText }}> Cart : {cart.length} </Text>
+          <Text style={{ ...styles.cartText, color: colors.text }}>
+            Cart : {cart.length}
+          </Text>
         </BorderlessButton>
       </View>
     </View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
+    paddingHorizontal: width * 0.05,
     elevation: 2,
   },
   cartContainer: {
@@ -48,13 +48,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    color: "#ffffff",
     textTransform: "uppercase",
     fontFamily: "JosefinSansR",
   },
   cartText: {
     fontSize: 18,
-    color: "#ffffff",
     fontFamily: "JosefinSansR",
   },
 });
