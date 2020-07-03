@@ -1,29 +1,11 @@
-const tintColorLight = "#2f95dc";
-const tintColorDark = "#fff";
+import { ColorProps } from "../types";
 
-export default {
-  light: {
-    text: "#000",
-    background: "#fff",
-    tint: tintColorLight,
-    tabIconDefault: "#ccc",
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: "#fff",
-    background: "#000",
-    tint: tintColorDark,
-    tabIconDefault: "#ccc",
-    tabIconSelected: tintColorDark,
-  },
-};
-
-export const dark = {
+export const dark: ColorProps = {
   background: "#212121",
   text: "#ffffff",
 };
 
-export const light = {
+export const light: ColorProps = {
   background: "#ffffff",
   text: "#121212",
 };

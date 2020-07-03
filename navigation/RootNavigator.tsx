@@ -22,7 +22,7 @@ const AccountNavigator = createStackNavigator();
 const TabNavigator = createBottomTabNavigator();
 
 const AccountNavigatorScreen: React.FC = () => {
-  const { colors, darkTheme } = useContext<any>(Context);
+  const { colors, darkTheme } = useContext(Context);
   return (
     <AccountNavigator.Navigator
       screenOptions={{
@@ -46,13 +46,15 @@ const AccountNavigatorScreen: React.FC = () => {
 };
 
 const TabNavigatorScreen: React.FC = () => {
-  const { darkTheme, colors } = useContext<any>(Context);
+  const { darkTheme, colors } = useContext(Context);
   return (
     <TabNavigator.Navigator
       tabBarOptions={{
         showLabel: false,
         style: { height: 65 },
-        tabStyle: { backgroundColor: darkTheme ? "#121212" : "#ffffff" },
+        tabStyle: {
+          backgroundColor: darkTheme ? "#121212" : "#ffffff",
+        },
       }}
     >
       <TabNavigator.Screen
@@ -108,7 +110,7 @@ const HomeNavigatorScreen: React.FC = () => {
 };
 
 const RootNavigator: React.FC = () => {
-  const { isLoggedIn } = useContext<any>(Context);
+  const { isLoggedIn } = useContext(Context);
   return (
     <NavigationContainer>
       {isLoggedIn ? <TabNavigatorScreen /> : <AccountNavigatorScreen />}

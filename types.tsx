@@ -1,17 +1,29 @@
-export type RootStackParamList = {
-  Root: undefined;
-  NotFound: undefined;
-};
+export interface StateProps {
+  products: ProductProps[];
+  colors: ColorProps;
+  manageCart: (action: string, payload: CartProps) => void;
+  getProduct: (product: ProductProps) => void;
+  cart: CartProps[];
+  cartTotal: number;
+  darkTheme: boolean;
+  isLoggedIn: boolean;
+  toggleTheme: () => void;
+}
 
-export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-};
+export interface ProductProps {
+  _id: string;
+  name: string;
+  price: number;
+  productImage: string;
+  specification?: string;
+}
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
-};
+export interface CartProps extends ProductProps {
+  count: number;
+  total: number;
+}
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
-};
+export interface ColorProps {
+  background: string;
+  text: string;
+}

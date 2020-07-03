@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ title, navigation }) => {
-  const { cart, colors, darkTheme } = useContext<any>(Context);
+  const { cart, colors, darkTheme } = useContext(Context);
   return (
     <View
       style={{

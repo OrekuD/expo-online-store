@@ -11,14 +11,13 @@ interface Props {
 }
 
 const Form: React.FC<Props> = ({ isSignUp, navigation }) => {
-  const { colors } = useContext<any>(Context);
+  const { colors } = useContext(Context);
 
   return (
     <View
       style={{
         ...styles.container,
-        backgroundColor: colors.background,
-        // paddingBottom: isSignUp ? 0 : 70,
+        backgroundColor: colors.text,
       }}
     >
       {isSignUp && (

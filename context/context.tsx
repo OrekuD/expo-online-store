@@ -1,33 +1,21 @@
 import React, { ReactNode, useState, useEffect, useContext } from "react";
 import { URL } from "../constants/Url";
 import { dark, light } from "../constants/Colors";
-
-const Context = React.createContext({});
+import { StateProps, ProductProps, CartProps, ColorProps } from "../types";
 
 interface Props {
   children: ReactNode;
 }
 
-interface ProductProps {
-  _id: string;
-  name: string;
-  price: number;
-  productImage: string;
-  specification?: string;
-}
-
-interface CartProps extends ProductProps {
-  count: number;
-  total: number;
-}
+const Context = React.createContext<StateProps>({});
 
 const AppProvider: React.FC<Props> = ({ children }) => {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [cart, setCart] = useState<CartProps[]>([]);
   const [cartTotal, setCartTotal] = useState<number>(0);
   const [darkTheme, setDarkTheme] = useState<boolean>(true);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [colors, setColors] = useState<object>(dark);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [colors, setColors] = useState<ColorProps>(dark);
 
   useEffect(() => {
     fetch(`${URL}/products`)
@@ -55,6 +43,10 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     let total = 0;
     cart.forEach((item) => (total += item.total));
     setCartTotal(total);
+  };
+
+  const toggleTheme = () => {
+    setDarkTheme(!darkTheme);
   };
 
   const manageCart = (action: string, product: CartProps) => {
@@ -107,25 +99,22 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const getProduct = (product: object) =>
+  const getProduct = (product: ProductProps) =>
     cart.find((item) => item._id === product._id);
 
-  return (
-    <Context.Provider
-      value={{
-        products,
-        colors,
-        manageCart,
-        getProduct,
-        cart,
-        cartTotal,
-        darkTheme,
-        isLoggedIn,
-      }}
-    >
-      {children}
-    </Context.Provider>
-  );
+  const state = {
+    products,
+    colors,
+    manageCart,
+    getProduct,
+    cart,
+    cartTotal,
+    darkTheme,
+    isLoggedIn,
+    toggleTheme,
+  };
+
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 };
 
 export { AppProvider, Context };
