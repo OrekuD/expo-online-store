@@ -29,7 +29,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     fetch(`${URL}/products`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.products);
+        // console.log(data.products);
         setProducts(data.products);
       })
       .catch((error) => console.log(error));
