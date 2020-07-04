@@ -21,7 +21,7 @@ interface Props {
 
 const CartItem: React.FC<Props> = ({ data }) => {
   const { name, price, productImage, count, total } = data;
-  const { darkTheme, manageCart } = useContext<any>(Context);
+  const { darkTheme, manageCart } = useContext(Context);
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -35,12 +35,12 @@ const CartItem: React.FC<Props> = ({ data }) => {
       <View style={styles.bottom}>
         <Text title={price} style={styles.priceText} />
         <View style={styles.count}>
-          <BorderlessButton onPress={() => manageCart("INCREASE", data)}>
-            <Entypo name="minus" color="#D3781F" size={26} />
+          <BorderlessButton onPress={() => manageCart("DECREASE", data)}>
+            <Entypo name="minus" color="#D3781F" size={30} />
           </BorderlessButton>
           <Text title={count} style={styles.countText} />
-          <BorderlessButton onPress={() => manageCart("DECREASE", data)}>
-            <Entypo name="plus" color="#D3781F" size={26} />
+          <BorderlessButton onPress={() => manageCart("INCREASE", data)}>
+            <Entypo name="plus" color="#D3781F" size={30} />
           </BorderlessButton>
         </View>
         <Text title={total} style={styles.priceText} />
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   },
   countText: {
     marginHorizontal: 15,
-    fontSize: 22,
+    fontSize: 26,
+    marginBottom: 5,
   },
   nameText: {
     fontSize: 26,

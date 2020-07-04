@@ -8,20 +8,29 @@ import { width } from "../constants/Layout";
 import { RectButton } from "react-native-gesture-handler";
 
 const Cart: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
-  const { cart, colors, cartTotal } = useContext<any>(Context);
+  const { cart, colors, cartTotal, manageCart } = useContext(Context);
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <Header navigation={navigation} />
       <View style={styles.cartSummary}>
         <Text title={cartTotal} style={styles.cartTotalText} />
-        <RectButton style={styles.button}>
-          <Text title="Checkout" style={styles.buttonText} />
-        </RectButton>
+        <View style={styles.cartButtons}>
+          <RectButton
+            onPress={() => manageCart("EMPTY")}
+            style={{ ...styles.button }}
+          >
+            <Text title="Clear" style={styles.buttonText} />
+          </RectButton>
+          <RectButton style={{ ...styles.button }}>
+            <Text title="Checkout" style={styles.buttonText} />
+          </RectButton>
+        </View>
       </View>
       <FlatList
         keyExtractor={(item) => item._id}
         data={cart}
         renderItem={({ item }) => <CartItem data={item} />}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -36,18 +45,23 @@ const styles = StyleSheet.create({
   },
   cartSummary: {
     width: width * 0.9,
-    height: 160,
+    height: 130,
     backgroundColor: "#fae3ba",
     borderRadius: 5,
     alignItems: "flex-end",
-    paddingRight: 15,
     paddingTop: 15,
     marginBottom: 15,
     justifyContent: "space-between",
   },
+  cartButtons: {
+    height: 70,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   button: {
-    width: 160,
-    height: 50,
+    width: 140,
+    height: 45,
     backgroundColor: "#6f0000",
     alignItems: "center",
     justifyContent: "center",
@@ -55,7 +69,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textTransform: "uppercase",
-    fontSize: 18,
+    fontSize: 16,
     color: "#ffffff",
   },
   cartTotalText: {

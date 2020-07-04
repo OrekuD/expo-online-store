@@ -1,13 +1,18 @@
 export interface StateProps {
   products: ProductProps[];
   colors: ColorProps;
-  manageCart: (action: string, payload: CartProps) => void;
-  getProduct: (product: ProductProps) => void;
   cart: CartProps[];
+  wishlist: ProductProps[];
   cartTotal: number;
   darkTheme: boolean;
   isLoggedIn: boolean;
+  tabBar: boolean;
   toggleTheme: () => void;
+  toggleTabBar: (bool: boolean) => void;
+  manageCart: (action: string, payload: CartProps) => void;
+  isProductInCart: (product: ProductProps) => CartProps | undefined;
+  isProductInWishlist: (product: ProductProps) => number;
+  addToWishlist: (product: ProductProps) => void;
 }
 
 export interface ProductProps {

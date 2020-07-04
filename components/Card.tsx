@@ -6,20 +6,20 @@ import Text from "./Text";
 import { RectButton } from "react-native-gesture-handler";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { URL } from "../constants/Url";
+import { ProductProps, CartProps } from "../types";
 
 interface Props {
   navigation?: any;
-  data: {
-    _id: string;
-    name: string;
-    price: number;
-    productImage: string;
-    specification?: string[];
-  };
+  data: CartProps;
 }
 
 const Card: React.FC<Props> = ({ navigation, data }) => {
-  const { getProduct, manageCart } = useContext<any>(Context);
+  const {
+    isProductInCart,
+    manageCart,
+    isProductInWishlist,
+    addToWishlist,
+  } = useContext(Context);
   const { name, price, productImage, specification, _id } = data;
   return (
     <RectButton
@@ -32,10 +32,14 @@ const Card: React.FC<Props> = ({ navigation, data }) => {
         resizeMode="cover"
       />
       <View style={styles.footer}>
-        <RectButton style={styles.button}>
-          <Ionicons name="ios-heart-empty" color="#121212" size={20} />
+        <RectButton style={styles.button} onPress={() => addToWishlist(data)}>
+          {isProductInWishlist(data) ? (
+            <Ionicons name="md-heart" color="red" size={20} />
+          ) : (
+            <Ionicons name="md-heart-empty" color="#121212" size={20} />
+          )}
         </RectButton>
-        {getProduct(data) ? (
+        {isProductInCart(data) ? (
           <RectButton
             onPress={() => manageCart("REMOVE", data)}
             style={styles.button}

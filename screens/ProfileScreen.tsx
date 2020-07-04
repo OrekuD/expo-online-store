@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, Image, Switch } from "react-native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { Context } from "../context/context";

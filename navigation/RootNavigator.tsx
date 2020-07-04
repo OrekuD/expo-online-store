@@ -46,7 +46,7 @@ const AccountNavigatorScreen: React.FC = () => {
 };
 
 const TabNavigatorScreen: React.FC = () => {
-  const { darkTheme, colors } = useContext(Context);
+  const { darkTheme, colors, tabBar } = useContext(Context);
   return (
     <TabNavigator.Navigator
       tabBarOptions={{
@@ -55,6 +55,9 @@ const TabNavigatorScreen: React.FC = () => {
         tabStyle: {
           backgroundColor: darkTheme ? "#121212" : "#ffffff",
         },
+      }}
+      screenOptions={{
+        tabBarVisible: tabBar,
       }}
     >
       <TabNavigator.Screen

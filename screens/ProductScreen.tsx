@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Image } from "react-native";
 import { Context } from "../context/context";
 import { Text, Header } from "../components";
@@ -14,8 +14,19 @@ const Product: React.FC<StackScreenProps<{}>> = ({
     params: { data },
   },
 }) => {
-  const { colors, manageCart, getProduct } = useContext<any>(Context);
+  const { colors, manageCart, isProductInCart, toggleTabBar } = useContext(
+    Context
+  );
   const { name, price, productImage, specification } = data;
+
+  useEffect(() => {
+    toggleTabBar(false);
+
+    return () => {
+      toggleTabBar(true);
+    };
+  }, []);
+
   return (
     <ScrollView
       contentContainerStyle={{ flex: 1, backgroundColor: colors.background }}
@@ -34,7 +45,7 @@ const Product: React.FC<StackScreenProps<{}>> = ({
           <Text title={name} style={styles.detailsText} />
           <Text title={price} style={styles.detailsText} />
         </View>
-        {getProduct(data) ? (
+        {isProductInCart(data) ? (
           <RectButton
             onPress={() => manageCart("REMOVE", data)}
             style={styles.button}

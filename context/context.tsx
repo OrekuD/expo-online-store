@@ -11,10 +11,12 @@ const Context = React.createContext<StateProps>({});
 
 const AppProvider: React.FC<Props> = ({ children }) => {
   const [products, setProducts] = useState<ProductProps[]>([]);
+  const [wishlist, setWishlist] = useState<ProductProps[]>([]);
   const [cart, setCart] = useState<CartProps[]>([]);
   const [cartTotal, setCartTotal] = useState<number>(0);
   const [darkTheme, setDarkTheme] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [tabBar, setTabBar] = useState<boolean>(true);
   const [colors, setColors] = useState<ColorProps>(dark);
 
   useEffect(() => {
@@ -42,20 +44,24 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   const calculateCartTotal = () => {
     let total = 0;
     cart.forEach((item) => (total += item.total));
-    setCartTotal(total);
+    setCartTotal(Number(total.toFixed(2)));
   };
 
   const toggleTheme = () => {
     setDarkTheme(!darkTheme);
   };
 
+  const toggleTabBar = (bool: boolean) => {
+    setTabBar(bool);
+  };
+
   const manageCart = (action: string, product: CartProps) => {
     let tempCart: CartProps[] = [];
-    let updatedProduct: CartProps = {};
+    let updatedProduct: CartProps | any = {};
     let updatedProductIndex = 0;
     switch (action) {
       case "ADD":
-        if (getProduct(product)) {
+        if (isProductInCart(product)) {
           return;
         }
         product.count = 1;
@@ -75,7 +81,10 @@ const AppProvider: React.FC<Props> = ({ children }) => {
         );
         updatedProduct = tempCart[updatedProductIndex];
         updatedProduct.count++;
-        updatedProduct.total = updatedProduct.count * updatedProduct.price;
+        updatedProduct.total = Number(
+          (updatedProduct.count * updatedProduct.price).toFixed(2)
+        );
+        console.log(updatedProduct.total);
         tempCart[updatedProductIndex] = updatedProduct;
         setCart(tempCart);
         break;
@@ -99,19 +108,41 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const getProduct = (product: ProductProps) =>
+  const isProductInCart = (product: ProductProps) =>
     cart.find((item) => item._id === product._id);
+
+  const isProductInWishlist = (product: ProductProps) =>
+    wishlist.find((item) => item._id === product._id);
+
+  const addToWishlist = (product: ProductProps) => {
+    let tempWishlist = [...wishlist];
+    if (isProductInWishlist(product)) {
+      const productIndex = tempWishlist.findIndex(
+        (item) => item._id === product._id
+      );
+      tempWishlist.splice(productIndex, 1);
+      setWishlist(tempWishlist);
+      return;
+    }
+    tempWishlist.unshift(product);
+    setWishlist(tempWishlist);
+  };
 
   const state = {
     products,
     colors,
     manageCart,
-    getProduct,
+    isProductInCart,
     cart,
     cartTotal,
     darkTheme,
     isLoggedIn,
     toggleTheme,
+    tabBar,
+    toggleTabBar,
+    wishlist,
+    isProductInWishlist,
+    addToWishlist,
   };
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
