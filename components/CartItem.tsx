@@ -6,17 +6,10 @@ import Text from "./Text";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { Context } from "../context/context";
 import { BorderlessButton } from "react-native-gesture-handler";
+import { CartProps } from "../types";
 
 interface Props {
-  data: {
-    _id: string;
-    name: string;
-    price: number;
-    productImage: string;
-    specification?: string;
-    count: number;
-    total: number;
-  };
+  data: CartProps;
 }
 
 const CartItem: React.FC<Props> = ({ data }) => {

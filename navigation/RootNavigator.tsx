@@ -9,6 +9,8 @@ import {
   ProfileScreen,
   SignIn,
   SignUp,
+  WishlistScreen,
+  CheckoutScreen,
 } from "../screens";
 import {
   Ionicons,
@@ -20,6 +22,7 @@ import { Context } from "../context/context";
 const HomeNavigator = createStackNavigator();
 const AccountNavigator = createStackNavigator();
 const TabNavigator = createBottomTabNavigator();
+const ProfileNavigator = createStackNavigator();
 
 const AccountNavigatorScreen: React.FC = () => {
   const { colors, darkTheme } = useContext(Context);
@@ -42,6 +45,17 @@ const AccountNavigatorScreen: React.FC = () => {
         options={{ title: "Sign Up" }}
       />
     </AccountNavigator.Navigator>
+  );
+};
+
+const ProfileNavigatorScreen: React.FC = () => {
+  const { colors, darkTheme } = useContext(Context);
+  return (
+    <ProfileNavigator.Navigator headerMode="none">
+      <ProfileNavigator.Screen name="Profile" component={ProfileScreen} />
+      <ProfileNavigator.Screen name="Wishlist" component={WishlistScreen} />
+      <ProfileNavigator.Screen name="Checkout" component={CheckoutScreen} />
+    </ProfileNavigator.Navigator>
   );
 };
 
@@ -88,7 +102,7 @@ const TabNavigatorScreen: React.FC = () => {
       />
       <TabNavigator.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileNavigatorScreen}
         options={{
           tabBarIcon: (props: { focused: boolean; color: string }) => (
             <MaterialCommunityIcons

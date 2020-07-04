@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, Image, Switch } from "react-native";
+import { View, StyleSheet, Image, Switch, FlatList } from "react-native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { Context } from "../context/context";
+import { WishlistItem } from "../components";
 
 const ProfileScreen: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
-  const { darkTheme, colors, toggleTheme } = useContext(Context);
+  const { darkTheme, colors, toggleTheme, wishlist } = useContext(Context);
 
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
@@ -14,6 +15,13 @@ const ProfileScreen: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
         style={styles.image}
       />
       <Switch value={darkTheme} onValueChange={toggleTheme} />
+      <View style={styles.wishlistContainer}>
+        <FlatList
+          data={wishlist}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => <WishlistItem data={item} />}
+        />
+      </View>
     </View>
   );
 };
@@ -35,6 +43,9 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     zIndex: 2,
     backgroundColor: "#ffffff",
+  },
+  wishlistContainer: {
+    width: "100%",
   },
 });
 

@@ -4,3 +4,5 @@ export { default as Cart } from "./Cart";
 export { default as ProfileScreen } from "./ProfileScreen";
 export { default as SignIn } from "./SignIn";
 export { default as SignUp } from "./SignUp";
+export { default as CheckoutScreen } from "./CheckoutScreen";
+export { default as WishlistScreen } from "./WishlistScreen";
