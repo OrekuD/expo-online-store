@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../context/context";
 import Text from "../components/Text";
-import { StackScreenProps } from "@react-navigation/stack";
-import { StyleSheet, View, FlatList, Image } from "react-native";
+import { StyleSheet, View, Image, Alert } from "react-native";
 import { width } from "../constants/Layout";
 import {
   TouchableOpacity,
@@ -16,16 +15,20 @@ interface Props {
   data: ProductProps;
 }
 
-const Wishlist: React.FC<Props> = ({ data }) => {
-  const {
-    cart,
-    colors,
-    cartTotal,
-    isProductInCart,
-    manageCart,
-    addToWishlist,
-  } = useContext(Context);
+const WishlistItem: React.FC<Props> = ({ data }) => {
+  const { isProductInCart, manageCart, modifyWishlist } = useContext(Context);
   const { name, price, productImage, specification, _id } = data;
+
+  const removeFromWishlist = (product: ProductProps): void => {
+    Alert.alert(
+      "Wishlist",
+      "Are you sure you want to remove product from wishlist?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Yes", onPress: () => modifyWishlist(product) },
+      ]
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
@@ -39,7 +42,7 @@ const Wishlist: React.FC<Props> = ({ data }) => {
         <View>
           <Text title={name} style={{ ...styles.nameText, ...styles.text }} />
           <View style={styles.tab}>
-            <BorderlessButton onPress={() => addToWishlist(data)}>
+            <BorderlessButton onPress={() => removeFromWishlist(data)}>
               <Ionicons name="md-heart" color="red" size={20} />
             </BorderlessButton>
             <Text style={styles.text} title={price} />
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flex: 2,
-    backgroundColor: "grey",
+    backgroundColor: "lightslategray",
     justifyContent: "space-between",
     paddingHorizontal: 7,
   },
@@ -104,7 +107,8 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 
-export default Wishlist;
+export default WishlistItem;

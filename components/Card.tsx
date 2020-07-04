@@ -18,7 +18,7 @@ const Card: React.FC<Props> = ({ navigation, data }) => {
     isProductInCart,
     manageCart,
     isProductInWishlist,
-    addToWishlist,
+    modifyWishlist,
   } = useContext(Context);
   const { name, price, productImage, specification, _id } = data;
   return (
@@ -32,7 +32,7 @@ const Card: React.FC<Props> = ({ navigation, data }) => {
         resizeMode="cover"
       />
       <View style={styles.footer}>
-        <RectButton style={styles.button} onPress={() => addToWishlist(data)}>
+        <RectButton style={styles.button} onPress={() => modifyWishlist(data)}>
           {isProductInWishlist(data) ? (
             <Ionicons name="md-heart" color="red" size={20} />
           ) : (

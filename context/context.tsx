@@ -1,7 +1,13 @@
 import React, { ReactNode, useState, useEffect, useContext } from "react";
 import { URL } from "../constants/Url";
 import { dark, light } from "../constants/Colors";
-import { StateProps, ProductProps, CartProps, ColorProps } from "../types";
+import {
+  StateProps,
+  ProductProps,
+  CartProps,
+  ColorProps,
+  UserProps,
+} from "../types";
 
 interface Props {
   children: ReactNode;
@@ -18,6 +24,11 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [tabBar, setTabBar] = useState<boolean>(true);
   const [colors, setColors] = useState<ColorProps>(dark);
+  const [userDetails, setUserDetails] = useState<UserProps>({
+    fullname: "Fiifi Benson",
+    email: "test@gmail.com",
+    image: null,
+  });
 
   useEffect(() => {
     fetch(`${URL}/products`)
@@ -114,7 +125,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   const isProductInWishlist = (product: ProductProps) =>
     wishlist.find((item) => item._id === product._id);
 
-  const addToWishlist = (product: ProductProps) => {
+  const modifyWishlist = (product: ProductProps) => {
     let tempWishlist = [...wishlist];
     if (isProductInWishlist(product)) {
       const productIndex = tempWishlist.findIndex(
@@ -142,7 +153,8 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     toggleTabBar,
     wishlist,
     isProductInWishlist,
-    addToWishlist,
+    modifyWishlist,
+    userDetails,
   };
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

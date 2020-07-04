@@ -9,7 +9,6 @@ import {
   ProfileScreen,
   SignIn,
   SignUp,
-  WishlistScreen,
   CheckoutScreen,
 } from "../screens";
 import {
@@ -53,7 +52,6 @@ const ProfileNavigatorScreen: React.FC = () => {
   return (
     <ProfileNavigator.Navigator headerMode="none">
       <ProfileNavigator.Screen name="Profile" component={ProfileScreen} />
-      <ProfileNavigator.Screen name="Wishlist" component={WishlistScreen} />
       <ProfileNavigator.Screen name="Checkout" component={CheckoutScreen} />
     </ProfileNavigator.Navigator>
   );

@@ -7,12 +7,19 @@ export interface StateProps {
   darkTheme: boolean;
   isLoggedIn: boolean;
   tabBar: boolean;
+  userDetails: UserProps;
   toggleTheme: () => void;
   toggleTabBar: (bool: boolean) => void;
   manageCart: (action: string, payload: CartProps) => void;
   isProductInCart: (product: ProductProps) => CartProps | undefined;
-  isProductInWishlist: (product: ProductProps) => number;
-  addToWishlist: (product: ProductProps) => void;
+  isProductInWishlist: (product: ProductProps) => ProductProps | undefined;
+  modifyWishlist: (product: ProductProps) => void;
+}
+
+export interface UserProps {
+  fullname: string;
+  email: string;
+  image?: string | null;
 }
 
 export interface ProductProps {

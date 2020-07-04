@@ -9,29 +9,47 @@ import { RectButton } from "react-native-gesture-handler";
 
 const Cart: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
   const { cart, colors, cartTotal, manageCart } = useContext(Context);
+
   return (
     <View style={{ ...styles.container, backgroundColor: colors.background }}>
       <Header navigation={navigation} />
-      <View style={styles.cartSummary}>
-        <Text title={cartTotal} style={styles.cartTotalText} />
-        <View style={styles.cartButtons}>
-          <RectButton
-            onPress={() => manageCart("EMPTY")}
-            style={{ ...styles.button }}
-          >
-            <Text title="Clear" style={styles.buttonText} />
-          </RectButton>
-          <RectButton style={{ ...styles.button }}>
-            <Text title="Checkout" style={styles.buttonText} />
-          </RectButton>
+      {cart.length === 0 ? (
+        <View
+          style={{ ...styles.container, backgroundColor: colors.background }}
+        >
+          <Text title="Cart is empty" />
         </View>
-      </View>
-      <FlatList
-        keyExtractor={(item) => item._id}
-        data={cart}
-        renderItem={({ item }) => <CartItem data={item} />}
-        showsVerticalScrollIndicator={false}
-      />
+      ) : (
+        <>
+          <View style={styles.cartSummary}>
+            <Text title={cartTotal} style={styles.cartTotalText} />
+            <View style={styles.cartButtons}>
+              <RectButton
+                onPress={() => manageCart("EMPTY")}
+                style={{ ...styles.button }}
+              >
+                <Text title="Clear" style={styles.buttonText} />
+              </RectButton>
+              <RectButton
+                onPress={() =>
+                  navigation.navigate("Profile", {
+                    screen: "Checkout",
+                  })
+                }
+                style={{ ...styles.button }}
+              >
+                <Text title="Checkout" style={styles.buttonText} />
+              </RectButton>
+            </View>
+          </View>
+          <FlatList
+            keyExtractor={(item) => item._id}
+            data={cart}
+            renderItem={({ item }) => <CartItem data={item} />}
+            showsVerticalScrollIndicator={false}
+          />
+        </>
+      )}
     </View>
   );
 };
