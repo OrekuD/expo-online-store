@@ -28,10 +28,8 @@ const Product: React.FC<StackScreenProps<{}>> = ({
   }, []);
 
   return (
-    <ScrollView
-      contentContainerStyle={{ flex: 1, backgroundColor: colors.background }}
-    >
-      <View style={styles.container}>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
+      <View style={{ ...styles.container }}>
         <Header title="Shopapp" navigation={navigation} />
         <Image
           source={{ uri: `${URL}/${productImage}` }}
@@ -68,14 +66,12 @@ const Product: React.FC<StackScreenProps<{}>> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: width,
-    paddingHorizontal: 10,
   },
   image: {
     width: "100%",
-    height: height > 720 ? height * 0.5 : height * 0.7,
+    height: height > 720 ? height * 0.6 : height * 0.6,
     backgroundColor: "red",
-    marginVertical: 15,
+    marginBottom: 15,
   },
   header: {
     height: 70,
@@ -91,7 +87,7 @@ const styles = StyleSheet.create({
   },
   details: {
     width: "100%",
-    height: 70,
+    height: 60,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

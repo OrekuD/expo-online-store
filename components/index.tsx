@@ -5,3 +5,4 @@ export { default as CartItem } from "./CartItem";
 export { default as WishlistItem } from "./WishlistItem";
 export { default as Statusbar } from "./Statusbar";
 export { default as Form } from "./Form";
+export { default as CartSummary } from "./CartSummary";

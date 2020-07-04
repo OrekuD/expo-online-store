@@ -38,4 +38,5 @@ export interface CartProps extends ProductProps {
 export interface ColorProps {
   background: string;
   text: string;
+  secondary: string;
 }

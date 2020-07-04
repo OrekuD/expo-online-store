@@ -65,7 +65,7 @@ const TabNavigatorScreen: React.FC = () => {
         showLabel: false,
         style: { height: 65 },
         tabStyle: {
-          backgroundColor: darkTheme ? "#121212" : "#ffffff",
+          backgroundColor: colors.secondary,
         },
       }}
       screenOptions={{

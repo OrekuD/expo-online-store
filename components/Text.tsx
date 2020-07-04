@@ -20,7 +20,7 @@ const Text: React.FC<Props> = ({ title, style }) => {
 const styles = StyleSheet.create({
   text: {
     fontFamily: "JosefinSansR",
-    fontSize: 16,
+    fontSize: 17,
   },
 });
 

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, Image, Switch, FlatList } from "react-native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { Context } from "../context/context";
-import { WishlistItem, Text } from "../components";
+import { WishlistItem, Text, CartSummary } from "../components";
 import { width } from "../constants/Layout";
 
 const ProfileScreen: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
@@ -36,15 +36,21 @@ const ProfileScreen: React.FC<BottomTabScreenProps<{}>> = ({ navigation }) => {
           </View>
         </View>
       </View>
+      <CartSummary onPress={() => navigation.navigate("Checkout")} />
       <View style={styles.wishlistContainer}>
-        {wishlist.length > 0 && (
-          <FlatList
-            data={wishlist}
-            ListHeaderComponent={wishlistHeader}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <WishlistItem data={item} />}
-          />
-        )}
+        <FlatList
+          data={wishlist}
+          ListHeaderComponent={wishlistHeader}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => <WishlistItem data={item} />}
+          ListEmptyComponent={() => (
+            <Text
+              title="Your wishlist is empty. Add items to see them here"
+              style={styles.emptyWishlistText}
+            />
+          )}
+          ListFooterComponent={() => <View style={{ height: 300 }} />}
+        />
       </View>
     </View>
   );
@@ -85,7 +91,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     height: 50,
     justifyContent: "center",
-    backgroundColor: "#6f0000",
+    backgroundColor: "lightslategray",
     alignSelf: "center",
     marginVertical: 10,
   },
@@ -107,6 +113,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  emptyWishlistText: {
+    width: width * 0.9,
+    alignSelf: "center",
   },
 });
 
